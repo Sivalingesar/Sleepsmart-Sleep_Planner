@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <style>
+    :root {
+      --electric-border-color: #02A2F8;
+      --electric-light-color: oklch(from var(--electric-border-color) l c h);
+      --gradient-color: oklch(from var(--electric-border-color) 0.3 calc(c / 2) h / 0.4);
+      --color-neutral-900: oklch(0.185 0 0);
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: transparent; 
+      color: white;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .svg-container { position: absolute; width: 0; height: 0; pointer-events: none; }
+
+    .carousel {
+      margin: 0 auto;
+      padding: 100px 0; 
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      background: transparent;
+    }
+
+    .group {
+      display: flex;
+      gap: 60px;
+      padding-right: 60px;
+      animation: scrolling 30s linear infinite;
+    }
+
+    @keyframes scrolling {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .carousel:hover .group { animation-play-state: paused; }
+
+    .card-wrapper {
+      position: relative;
+      flex: 0 0 350px;
+      height: 500px;
+    }
+
+    .card-container-bg {
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: 24px;
+      background: linear-gradient(-30deg, var(--gradient-color), transparent, var(--gradient-color)),
+                  linear-gradient(to bottom, var(--color-neutral-900), var(--color-neutral-900));
+      z-index: 1;
+    }
+
+    .border-outer {
+      border: 2px solid #02A2F8;
+      border-radius: 24px;
+      padding-right: 4px;
+      padding-bottom: 4px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    .main-card-spark {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      border: 2px solid var(--electric-border-color);
+      margin-top: -4px;
+      margin-left: -4px;
+      filter: url(#turbulent-displace);
+    }
+
+    .glow-layer-2 {
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--electric-light-color);
+      border-radius: 24px;
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .background-glow {
+      position: absolute;
+      inset: -40px; 
+      border-radius: 40px;
+      filter: blur(50px);
+      opacity: 0.5;
+      z-index: 0;
+      background: radial-gradient(circle at center, var(--electric-border-color), transparent 70%);
+      pointer-events: none;
+    }
+
+    .content-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .content-top {
+      padding: 40px 30px 0 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scrollbar-glass {
+      background: rgba(2, 162, 248, 0.2);
+      border: 1px solid var(--electric-border-color);
+      border-radius: 14px;
+      width: fit-content;
+      padding: 6px 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .fact-text {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 20px 0;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      border: none;
+      height: 1px;
+      background-color: var(--electric-border-color);
+      opacity: 0.3;
+      margin: 0 40px;
+    }
+
+    .content-bottom {
+      padding: 20px 30px 50px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <svg class="svg-container">
+    <defs>
+      <filter id="turbulent-displace" color-interpolation-filters="sRGB" x="-25%" y="-25%" width="150%" height="150%">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="1" />
+        <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+          <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+        </feOffset>
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="1" />
+        <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+          <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" calcMode="linear" />
+        </feOffset>
+        <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+        <feBlend in="part1" in2="part1" mode="color-dodge" result="combinedNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale="30" xChannelSelector="R" yChannelSelector="B" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="carousel">
+    <div class="group">
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 1</div>
+            <p class="fact-text">Set Your Wake-Up Time</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Identify when you need to be out of bed for school. Accuracy is key to aligning your internal clock.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 2</div>
+            <p class="fact-text">Generate Your Windows</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">The planner calculates 3 times based on 90-minute sleep cycles so you wake up feeling refreshed.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 3</div>
+            <p class="fact-text">Pick Your Bedtime</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Choose the window that fits your homework load. Aim for the "Optimal" time for maximum focus.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 4</div>
+            <p class="fact-text">Start Wind-Down</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Put away blue-light devices 30 minutes before your chosen time to prepare your brain for rest.</div>
+        </div>
+      </div>
+    </div>
+
+    <div aria-hidden="true" class="group">
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 1</div>
+            <p class="fact-text">Set Your Wake-Up Time</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Identify when you need to be out of bed for school. Accuracy is key to aligning your internal clock.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 2</div>
+            <p class="fact-text">Generate Your Windows</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">The planner calculates 3 times based on 90-minute sleep cycles so you wake up feeling refreshed.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 3</div>
+            <p class="fact-text">Pick Your Bedtime</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Choose the window that fits your homework load. Aim for the "Optimal" time for maximum focus.</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="background-glow"></div>
+        <div class="card-container-bg"><div class="border-outer"><div class="main-card-spark"></div></div></div>
+        <div class="glow-layer-2"></div>
+        <div class="content-container">
+          <div class="content-top">
+            <div class="scrollbar-glass">Step 4</div>
+            <p class="fact-text">Start Wind-Down</p>
+          </div>
+          <hr class="divider" />
+          <div class="content-bottom">Put away blue-light devices 30 minutes before your chosen time to prepare your brain for rest.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
