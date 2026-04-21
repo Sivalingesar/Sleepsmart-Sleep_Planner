@@ -48,7 +48,6 @@
         .hero-section h1, .copy {
             font-family: "Lilita One", cursive;
             text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-            /* Reduced slightly from 16vw to fit longer text */
             font-size: 12vw; 
             display: block;
             position: absolute;
@@ -91,6 +90,27 @@
             width: 100%;
             padding: 50px 0;
         }
+
+        /* --- FOOTER STYLING --- */
+        .site-footer {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: var(--bg-color);
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .footer-highlight {
+            color: var(--electric-border-color);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -112,12 +132,19 @@
     </section>
 
     <div class="content-container" id="main-content">
-        </div>
         <object type="text/html" data="schedulemaker.html" width="100%" height="800"></object>
         <object type="text/html" data="hovertextboxsleepplanner.html" width="100%" height="300"></object>
         <object type="text/html" data="sleepplannercarousel.html" width="100%" height="600"></object>
-        
-        <br><br>
+    </div>
+
+    <footer class="site-footer">
+        <p class="footer-text">
+            Testing was conducted by a group of high school students from 
+ Western Sydney, 
+            along with self-testing during development.
+        </p>
+    </footer>
+
     <script>
         function scrollToContent() {
             document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
